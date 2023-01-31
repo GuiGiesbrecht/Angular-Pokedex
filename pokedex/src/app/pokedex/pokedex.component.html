@@ -1,4 +1,7 @@
 <div *ngFor="let pokemon of pokemonList">
   <img src="{{pokemon.image}}">
   <p>{{ pokemon.name }}</p>
+  <div *ngFor="let type of pokemon.types">
+    <p>{{ type }}</p>
+  </div>
 </div>
