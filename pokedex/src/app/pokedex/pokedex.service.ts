@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom, map } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
+import { Pokemon } from './pokemon';
 
 @Injectable({
   providedIn: 'root',
@@ -9,24 +10,23 @@ export class PokeApiService {
   constructor(private httpClient: HttpClient) {}
 
   async getPokemonList() {
-    const req = await lastValueFrom(
-      this.httpClient.get<any>('https://pokeapi.co/api/v2/pokemon?limit=151')
-    );
+    const pokemonList = [];
 
-    const pokemonBasicList = await Promise.all(
-      req.results.map(async (pokemon: any) => {
-        const id = pokemon.url.split('/')[6];
-        console.log(id);
-        return {
-          id,
-          name: pokemon.name,
-          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-        };
-      })
-    );
+    for (let index = 1; index < 151; index++) {
+      pokemonList.push(
+        await lastValueFrom(
+          this.httpClient.get<any>(`https://pokeapi.co/api/v2/pokemon/${index}`)
+        ).then((res) => {
+          return {
+            id: res.id,
+            name: res.name,
+            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${res.id}.png`,
+            types: res.types.map((type: any) => type.type.name),
+          } as Pokemon;
+        })
+      );
+    }
 
-    console.log(pokemonBasicList);
-
-    return pokemonBasicList;
+    return pokemonList;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokeApiService } from './pokedex.service';
+import { Pokemon } from './pokemon';
 
 @Component({
   selector: 'app-pokedex',
@@ -7,14 +8,13 @@ import { PokeApiService } from './pokedex.service';
   styleUrls: ['./pokedex.component.scss'],
 })
 export class PokedexComponent implements OnInit {
-  pokemonList: any;
+  pokemonList: Pokemon[] = [];
 
   constructor(private pokeApiService: PokeApiService) {}
 
   ngOnInit(): void {
     this.pokeApiService.getPokemonList().then((res) => {
       this.pokemonList = res;
-      // console.warn(this.pokemonList);
     });
   }
 }
