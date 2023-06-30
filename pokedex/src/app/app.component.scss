@@ -1,5 +1,12 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .app-content-body {
   background-image: url("https://img.freepik.com/free-vector/gradient-purple-hexagonal-background_23-2148965956.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  flex-grow: 1;
 }

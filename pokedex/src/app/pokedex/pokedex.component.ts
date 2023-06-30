@@ -18,7 +18,8 @@ export class PokedexComponent implements OnInit {
       this.pokemonList = res;
 
       setTimeout(() => {
-        VanillaTilt.init(document.querySelector('.card')! as HTMLElement);
+        const cardElements = document.querySelectorAll('.card');
+        VanillaTilt.init(Array.from(cardElements) as HTMLElement[]);
       }, 1000);
     });
   }
