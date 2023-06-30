@@ -12,7 +12,7 @@ export class PokeApiService {
   async getPokemonList() {
     const pokemonList = [];
 
-    for (let index = 1; index < 151; index++) {
+    for (let index = 1; index < 11; index++) {
       pokemonList.push(
         await lastValueFrom(
           this.httpClient.get<any>(`https://pokeapi.co/api/v2/pokemon/${index}`)

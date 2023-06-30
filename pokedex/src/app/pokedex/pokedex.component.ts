@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokeApiService } from './pokedex.service';
 import { Pokemon } from './pokemon';
-
 @Component({
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
@@ -15,6 +14,7 @@ export class PokedexComponent implements OnInit {
   ngOnInit(): void {
     this.pokeApiService.getPokemonList().then((res) => {
       this.pokemonList = res;
+      console.log(this.pokemonList);
     });
   }
 }
