@@ -9,10 +9,14 @@ import { Pokemon } from './pokemon';
 export class PokeApiService {
   constructor(private httpClient: HttpClient) {}
 
-  async getPokemonList() {
+  async getPokemonList(page: number, itensPerPage: number) {
     const pokemonList = [];
 
-    for (let index = 1; index < 11; index++) {
+    for (
+      let index = 1 + (page - 1) * itensPerPage;
+      index < page * itensPerPage + 1;
+      index++
+    ) {
       pokemonList.push(
         await lastValueFrom(
           this.httpClient.get<any>(`https://pokeapi.co/api/v2/pokemon/${index}`)
@@ -28,5 +32,15 @@ export class PokeApiService {
     }
 
     return pokemonList;
+  }
+
+  async countPokemons() {
+    return await lastValueFrom(
+      this.httpClient.get<any>(
+        'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
+      )
+    ).then((res) => {
+      return res.count;
+    });
   }
 }
